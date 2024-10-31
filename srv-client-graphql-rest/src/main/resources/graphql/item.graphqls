@@ -1,0 +1,12 @@
+# Тип для сущности Item
+type Item {
+    id: ID
+    title: String
+    description: String
+    price: Float
+}
+
+# Запросы для получения данных
+type Query {
+    getItemById(id: ID!): Item
+}

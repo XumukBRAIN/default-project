@@ -1,0 +1,25 @@
+syntax = "proto3";
+package com.dev.grpc.item;
+
+import "google/protobuf/wrappers.proto";
+
+service ItemService {
+  rpc getItem(GetItemByIdRq) returns (GetItemByIdRs);
+}
+
+message GetItemByIdRq {
+  int32 itemId = 1;
+  string reqId = 2;
+  string reqTm = 3;
+  string fromSystemName = 4;
+}
+
+message GetItemByIdRs {
+  Item item = 1;
+}
+
+message Item {
+  string title = 1;
+  string description = 2;
+  double price = 3;
+}

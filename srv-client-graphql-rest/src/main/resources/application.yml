@@ -1,0 +1,18 @@
+http-item-service:
+  httpMethod: POST
+  httpUrl: http://localhost:8082/api/getItemById
+  mediaType: "application/json"
+  settings:
+    httpCallTimeoutSeconds: 10000
+    connectTimeout: 10000s
+
+server:
+  port: 8081
+
+spring:
+  graphql:
+    graphiql:
+      enabled: true
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
