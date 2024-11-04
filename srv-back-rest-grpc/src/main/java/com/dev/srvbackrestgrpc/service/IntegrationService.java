@@ -7,6 +7,7 @@ import com.dev.srvbackrestgrpc.model.GetItemResponse;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -15,9 +16,12 @@ import java.math.BigDecimal;
 @Service
 public class IntegrationService {
 
+    @Value("${integration.grpc.targetService}")
+    private String targetService;
+
     public GetItemResponse getItem(GetItemRequest getItemRequest) {
         log.info("srv-back-rest-grpc: getting request: {}", getItemRequest);
-        ManagedChannel channel = ManagedChannelBuilder.forTarget("srv-back-grpc-kafka:9091")
+        ManagedChannel channel = ManagedChannelBuilder.forTarget(targetService)
                 .usePlaintext()
                 .build();
 

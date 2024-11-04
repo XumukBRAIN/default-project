@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: srv-back-kafka
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: srv-back-kafka
+  template:
+    metadata:
+      labels:
+        app: srv-back-kafka
+    spec:
+      containers:
+        - name: srv-back-kafka
+          image: metaxumuk/default-project-srv-back-kafka:latest
+          ports:
+            - containerPort: 8084

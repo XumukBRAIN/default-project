@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: srv-client-graphql-rest
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: srv-client-graphql-rest
+  template:
+    metadata:
+      labels:
+        app: srv-client-graphql-rest
+    spec:
+      containers:
+        - name: srv-client-graphql-rest
+          image: metaxumuk/default-project-srv-client-graphql-rest:latest
+          ports:
+            - containerPort: 8081
+          volumeMounts:
+            - name: srv-client-graphql-rest-config-volume
+              mountPath: /config # Путь, по которому будет доступен файл application.yml в контейнере.
+          env:
+            - name: SPRING_CONFIG_LOCATION
+              value: file:/config/application.yml
+      volumes:
+        - name: srv-client-graphql-rest-config-volume
+          configMap:
+            name: srv-client-graphql-rest-config # Ссылка на ConfigMap.

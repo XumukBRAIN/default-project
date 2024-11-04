@@ -111,3 +111,9 @@ message Item {
 1? - `C:/Kafka` - это МОЙ путь, где лежит `Kafka`;
 
 2? - Чтобы в `CMD` перейти в какую-то папку надо использовать команду `cd C:\Ваша директория`.
+
+## Полезные ссылки:
+* https://kubernetes.io/ru/docs/tasks/tools/install-minikube/
+* https://kubernetes.io/ru/docs/setup/learning-environment/minikube/#указание-драйвера-виртуальной-машины
+
+P.S. При старте приложения в кластере k8s меняется ip адрес, поэтому нужно менять его каждый раз в конфигах кубера!

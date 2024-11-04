@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: srv-back-rest-grpc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: srv-back-rest-grpc
+  template:
+    metadata:
+      labels:
+        app: srv-back-rest-grpc
+    spec:
+      containers:
+        - name: srv-back-rest-grpc
+
+          image: metaxumuk/default-project-srv-back-rest-grpc:latest
+          ports:
+            - containerPort: 8082
+          volumeMounts:
+            - name: srv-back-rest-grpc-config-volume
+              mountPath: /config # Путь, по которому будет доступен файл application.yml в контейнере.
+          env:
+            - name: SPRING_CONFIG_LOCATION
+              value: file:/config/application.yml
+      volumes:
+        - name: srv-back-rest-grpc-config-volume
+          configMap:
+            name: srv-back-rest-grpc-config # Ссылка на ConfigMap.

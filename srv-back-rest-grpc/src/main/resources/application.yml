@@ -8,6 +8,10 @@ spring:
     pathmatch:
       matching-strategy: ant_path_matcher
 
+integration:
+  grpc:
+    targetService: "srv-back-grpc-kafka:9091"
+
 grpc:
   server:
     port: 9090

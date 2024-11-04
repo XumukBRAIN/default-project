@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka
+spec:
+  ports:
+    #- port: 29092   # Для внешнего доступа (PLAINTEXT_HOST)
+    #  targetPort: 29092
+    - port: 9092    # Для внутреннего доступа (PLAINTEXT)
+      targetPort: 9092
+  selector:
+    app: kafka

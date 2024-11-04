@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: srv-client-graphql-rest-config
+data:
+  application.yml: |
+    http-item-service:
+      httpMethod: POST
+      httpUrl: http://172.22.222.182:30002/api/getItemById
+      mediaType: "application/json"
+      httpSettings:
+        httpCallTimeoutSeconds: 10000
+        connectTimeout: 10000s
+
+    server:
+      port: 8081
+  
+    spring:
+      application:
+        name: srv-client-graphql-rest
+      graphql:
+        graphiql:
+          enabled: true
+      mvc:
+        pathmatch:
+          matching-strategy: ant_path_matcher
+  
