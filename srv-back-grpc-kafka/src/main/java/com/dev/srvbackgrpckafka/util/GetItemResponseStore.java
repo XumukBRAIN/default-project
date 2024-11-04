@@ -7,17 +7,17 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class GetItemResponseStore {
 
-    public static Map<String, GetItemResponse> getItemResponseStore = new ConcurrentHashMap<>();
+    private static final Map<String, GetItemResponse> GET_ITEM_RESPONSE_STORE = new ConcurrentHashMap<>();
 
     public static void saveResponse(String reqId, GetItemResponse itemResponse) {
-        getItemResponseStore.put(reqId, itemResponse);
+        GET_ITEM_RESPONSE_STORE.put(reqId, itemResponse);
     }
 
     public static GetItemResponse getResponse(String reqId) {
-        return getItemResponseStore.get(reqId);
+        return GET_ITEM_RESPONSE_STORE.get(reqId);
     }
 
     public static void removeResponse(String reqId) {
-        getItemResponseStore.remove(reqId);
+        GET_ITEM_RESPONSE_STORE.remove(reqId);
     }
 }

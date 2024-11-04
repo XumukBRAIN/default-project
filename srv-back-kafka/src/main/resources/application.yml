@@ -2,6 +2,10 @@ server:
   port: 8084
 
 spring:
+  application:
+    name: "srv-back-kafka"
+  kafka:
+    bootstrap-servers: kafka:9092
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher

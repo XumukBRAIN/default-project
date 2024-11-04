@@ -4,6 +4,7 @@ import com.dev.srvclientgraphqlrest.config.ProjectHttpProperties;
 import com.dev.srvclientgraphqlrest.converter.Converter;
 import com.dev.srvclientgraphqlrest.model.GetItemRequest;
 import com.dev.srvclientgraphqlrest.model.Item;
+import com.dev.srvclientgraphqlrest.publishers.DefaultEventPublisher;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -27,22 +28,30 @@ public class IntegrationService {
 
     private final Converter converter;
 
-    public IntegrationService(ObjectMapper objectMapper, @Qualifier("projectHttpProperties") ProjectHttpProperties httpProperties, HttpClient httpClient, Converter converter) {
+    private final DefaultEventPublisher eventPublisher;
+
+    public IntegrationService(ObjectMapper objectMapper, @Qualifier("projectHttpProperties") ProjectHttpProperties httpProperties, HttpClient httpClient, Converter converter, DefaultEventPublisher eventPublisher) {
         this.objectMapper = objectMapper;
         this.httpProperties = httpProperties;
         this.httpClient = httpClient;
         this.converter = converter;
+        this.eventPublisher = eventPublisher;
     }
 
     @SchemaMapping
     public Item getItem(Integer itemId) {
+        log.info("srv-back-graphql-rest: Getting future item with id {}", itemId);
         GetItemRequest getItemRequest = converter.buildGetItemRequest(itemId);
         try {
             String stringObject = objectMapper.writeValueAsString(getItemRequest);
+            log.info("srv-back-graphql-rest: GetItemRequest: {}", stringObject);
             HttpRequest.BodyPublisher body = HttpRequest.BodyPublishers.ofString(stringObject);
             HttpRequest.Builder request = converter.buildHttpRequest(body, httpProperties);
             HttpResponse<String> response = httpClient.send(request.build(), HttpResponse.BodyHandlers.ofString());
-            return objectMapper.readValue(response.body(), Item.class);
+            String responseBody = response.body();
+            log.info("srv-back-graphql-rest: Response body: {}", responseBody);
+            eventPublisher.publish(responseBody);
+            return objectMapper.readValue(responseBody, Item.class);
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e.getMessage());
         }

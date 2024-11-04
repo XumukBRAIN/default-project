@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 
 //@Slf4j
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class GetItemKafkaConsumer {
@@ -22,6 +23,7 @@ public class GetItemKafkaConsumer {
     @KafkaListener(topics = "getItemByIdRq", groupId = "getItemRequestConsumer")
     public void listen(String message) {
         try {
+            log.info("srv-back-kafka: getting request: {}", message);
             GetItemRequest getItemRequest = objectMapper.readValue(message, GetItemRequest.class);
 
             GetItemResponse getItemResponse = GetItemResponse.builder()

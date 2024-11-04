@@ -2,6 +2,7 @@ package com.dev.srvclientgraphqlrest.converter;
 
 import com.dev.srvclientgraphqlrest.config.ProjectHttpProperties;
 import com.dev.srvclientgraphqlrest.model.GetItemRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -10,6 +11,7 @@ import java.net.http.HttpRequest;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+@Slf4j
 @Component
 public class Converter {
 
@@ -37,8 +39,9 @@ public class Converter {
             builder.setHeader(HttpHeaders.CONTENT_TYPE, properties.getMediaType().toString());
         }
 
-        builder.timeout(properties.getSettings().getCallTimeout());
+        builder.timeout(properties.getHttpSettings().getCallTimeout());
         builder.uri(properties.getHttpUrl());
+        log.info("srv-back-graphql-rest: URL: {}", properties.getHttpUrl());
         return builder;
     }
 }

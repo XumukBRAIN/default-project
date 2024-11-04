@@ -16,7 +16,8 @@ import java.math.BigDecimal;
 public class IntegrationService {
 
     public GetItemResponse getItem(GetItemRequest getItemRequest) {
-        ManagedChannel channel = ManagedChannelBuilder.forTarget("localhost:9091")
+        log.info("srv-back-rest-grpc: getting request: {}", getItemRequest);
+        ManagedChannel channel = ManagedChannelBuilder.forTarget("srv-back-grpc-kafka:9091")
                 .usePlaintext()
                 .build();
 
@@ -30,6 +31,7 @@ public class IntegrationService {
                 .build();
 
         GetItemService.GetItemByIdRs response = stub.getItem(request);
+        log.info("srv-back-rest-grpc: getting response: {}", response);
         GetItemService.Item item = response.getItem();
 
         return GetItemResponse.builder()

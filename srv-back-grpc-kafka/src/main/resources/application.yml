@@ -2,9 +2,13 @@ server:
   port: 8083
 
 spring:
+  application:
+    name: "srv-back-grpc-kafka"
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+  kafka:
+    bootstrap-servers: kafka:9092
 
 grpc:
   server:

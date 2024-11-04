@@ -25,6 +25,7 @@ public class GetItemGrpcService extends ItemServiceGrpc.ItemServiceImplBase {
     @Override
     public void getItem(GetItemService.GetItemByIdRq request, StreamObserver<GetItemService.GetItemByIdRs> responseObserver) {
         try {
+            log.info("srv-back-grpc-kafka: getting request: {}", request);
             GetItemRequest getItemRequest = GetItemRequest.builder()
                     .itemId(request.getItemId())
                     .reqId(request.getReqId())
@@ -35,6 +36,7 @@ public class GetItemGrpcService extends ItemServiceGrpc.ItemServiceImplBase {
             getItemKafkaProducer.sendGetItemRequest(getItemRequest);
 
             GetItemResponse item = waitForResponse(getItemRequest.reqId());
+            log.info("srv-back-grpc-kafka: getting response: {}", item);
 
             GetItemService.GetItemByIdRs response = GetItemService.GetItemByIdRs.newBuilder()
                     .setItem(GetItemService.Item.newBuilder()

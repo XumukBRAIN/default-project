@@ -14,7 +14,7 @@ public class ApplicationConfig {
 
     @Bean
     public HttpClient httpClient(@Qualifier("projectHttpProperties") ProjectHttpProperties properties) {
-        ProjectHttpProperties.HttpSettings settings = properties.getSettings();
+        ProjectHttpProperties.HttpSettings settings = properties.getHttpSettings();
         HttpClient.Builder builder = HttpClient.newBuilder()
                 .connectTimeout(settings.getConnectTimeout())
                 .cookieHandler(new CookieManager());

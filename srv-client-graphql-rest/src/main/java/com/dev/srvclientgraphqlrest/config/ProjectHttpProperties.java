@@ -20,7 +20,7 @@ public class ProjectHttpProperties {
     private String httpMethod;
     private URI httpUrl;
     private MediaType mediaType = MediaType.APPLICATION_JSON;
-    private HttpSettings settings;
+    private HttpSettings httpSettings;
 
     @Getter
     @Setter
